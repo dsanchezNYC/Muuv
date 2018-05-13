@@ -13,6 +13,8 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.*;
+
 
 public class stepDefinition {
 
