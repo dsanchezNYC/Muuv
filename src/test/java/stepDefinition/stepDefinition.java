@@ -69,4 +69,46 @@ public class stepDefinition {
         driver.close();
         driver.quit();
     }
+
+    @When("^I use demo credentials$")
+    public void i_use_demo_credentials() throws Throwable {
+        WebDriverWait waitLogin= new WebDriverWait(driver, 10);
+        waitLogin.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='demo-button']")));
+        driver.findElement(By.xpath("//button[@class='demo-button']")).click();
+    }
+
+    @Then("^I should be logged in successfully$")
+    public void i_should_be_logged_in_successfully() throws Throwable {
+        WebDriverWait waitLogin= new WebDriverWait(driver, 10);
+        waitLogin.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@class='sprites dropdown pic']")));
+        if(driver.findElement(By.className("logged-in-navbar")).isDisplayed() == false){
+            Assert.fail();
+        }
+        driver.close();
+        driver.quit();
+    }
+
+    @When("^I entered valid credentials$")
+    public void i_entered_valid_credentials() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+
+    }
+
+    @When("^I entered invalid credentials$")
+    public void i_entered_invalid_credentials() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+
+    }
+
+    @Then("^I should be not be logged in$")
+    public void i_should_be_not_be_logged_in() throws Throwable {
+        String error;
+        error = driver.findElement(By.className("login-error")).getText();
+        if(error != "The email or password did not match. Please try again"){
+            Assert.fail();
+        }
+    }
+
+
+
 }
