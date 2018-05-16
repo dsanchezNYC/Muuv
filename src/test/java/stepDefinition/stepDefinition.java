@@ -14,6 +14,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import static org.junit.Assert.assertEquals;
 import static org.assertj.core.api.Assertions.*;
+import static org.openqa.selenium.support.ui.ExpectedConditions.textToBe;
+
+import PageBlocks.LandingPage;
+import PageBlocks.LoginPage;
 
 
 public class stepDefinition {
@@ -44,14 +48,16 @@ public class stepDefinition {
     public void i_click_Sign_Up() throws Throwable {
         WebDriverWait waitLogin= new WebDriverWait(driver, 10);
         waitLogin.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@class='signup-root']")));
-        driver.findElement(By.xpath("//*[@class='signup-root']")).click();
+        LandingPage.SignUp(driver).click();
+
     }
 
     @When("^I click Log In$")
     public void i_click_Log_In() throws Throwable {
         WebDriverWait waitLogin= new WebDriverWait(driver, 10);
         waitLogin.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@class='login-root splash-login']")));
-        driver.findElement(By.xpath("//*[@class='login-root splash-login']")).click();
+        //driver.findElement(By.xpath("//*[@class='login-root splash-login']")).click();
+        LandingPage.LogIn(driver).click();
     }
 
     @Then("^I can view sign up modal")
@@ -74,13 +80,14 @@ public class stepDefinition {
     public void i_use_demo_credentials() throws Throwable {
         WebDriverWait waitLogin= new WebDriverWait(driver, 10);
         waitLogin.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='demo-button']")));
-        driver.findElement(By.xpath("//button[@class='demo-button']")).click();
+        //driver.findElement(By.xpath("//button[@class='demo-button']")).click();
+        LoginPage.DemoLogin(driver).click();
     }
 
     @Then("^I should be logged in successfully$")
     public void i_should_be_logged_in_successfully() throws Throwable {
         WebDriverWait waitLogin= new WebDriverWait(driver, 10);
-        waitLogin.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@class='sprites dropdown pic']")));
+        waitLogin.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@class='prof-pic']")));
         if(driver.findElement(By.className("logged-in-navbar")).isDisplayed() == false){
             Assert.fail();
         }
@@ -90,23 +97,31 @@ public class stepDefinition {
 
     @When("^I entered valid credentials$")
     public void i_entered_valid_credentials() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-
+        LoginPage.LoginUsername(driver).sendKeys("test@test.com");
+        LoginPage.LoginPassword(driver).sendKeys("12345");
+        LoginPage.LoginButton(driver).click();
     }
 
     @When("^I entered invalid credentials$")
     public void i_entered_invalid_credentials() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-
+        LoginPage.LoginUsername(driver).sendKeys("test@test.com");
+        LoginPage.LoginPassword(driver).sendKeys("11111");
+        LoginPage.LoginButton(driver).click();
     }
 
     @Then("^I should be not be logged in$")
     public void i_should_be_not_be_logged_in() throws Throwable {
+        WebDriverWait waitLogin= new WebDriverWait(driver, 10);
+        //waitLogin.until(textToBe(LoginPage.ErrorMessage(driver).,"The email or password did not match. Please try again");
+        waitLogin.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@class='login-submit-button']")));
         String error;
-        error = driver.findElement(By.className("login-error")).getText();
+        //error = driver.findElement(By.className("login-error")).getText();
+        error = LoginPage.ErrorMessage(driver).getText();
         if(error != "The email or password did not match. Please try again"){
             Assert.fail();
         }
+        driver.close();
+        driver.quit();
     }
 
 
