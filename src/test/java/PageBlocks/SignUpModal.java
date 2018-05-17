@@ -14,4 +14,40 @@ public class SignUpModal {
 
         return element;
     }
+
+    public static WebElement SignUpUsername(WebDriver driver){
+
+        element = driver.findElement(By.xpath("//*[@class='signup-input'][1]"));
+
+        return element;
+    }
+
+    public static WebElement SignUpPassword(WebDriver driver){
+
+        element = driver.findElement(By.xpath("//*[@class='signup-input'][2]"));
+
+        return element;
+    }
+
+    public static WebElement SignUpShowPassword(WebDriver driver){
+
+        element = driver.findElement(By.xpath("//*[@class='password']"));
+
+        return element;
+    }
+
+    public static WebElement EmailError(WebDriver driver){
+
+        element = driver.findElement(By.xpath("//*[@class='email-error']"));
+
+        return element;
+    }
+
+    public static WebElement PasswordError(WebDriver driver){
+
+        element = driver.findElement(By.xpath("//*[@class='password-error']"));
+
+        return element;
+    }
+
 }

@@ -1,5 +1,6 @@
 package stepDefinition;
 
+import PageBlocks.SignUpModal;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -14,10 +15,14 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import static org.junit.Assert.assertEquals;
 import static org.assertj.core.api.Assertions.*;
+import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 import static org.openqa.selenium.support.ui.ExpectedConditions.textToBe;
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
 import PageBlocks.LandingPage;
 import PageBlocks.LoginPage;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 
 public class stepDefinition {
@@ -131,6 +136,33 @@ public class stepDefinition {
         driver.quit();
     }
 
+    @When("^I entered valid username/password$")
+    public void i_entered_valid_username_password() throws Throwable {
+        int RandomNum = ThreadLocalRandom.current().nextInt(1,1000);
+        SignUpModal.SignUpUsername(driver).sendKeys("test" + RandomNum + "@test.com");
+        SignUpModal.SignUpPassword(driver).sendKeys("123456");
+        SignUpModal.SignUpButton(driver).click();
+    }
 
+    @When("^I entered invalid username/password$")
+    public void i_entered_invalid_username_password() throws Throwable {
+        SignUpModal.SignUpUsername(driver).sendKeys("test");
+        SignUpModal.SignUpPassword(driver).sendKeys("test");
+        SignUpModal.SignUpButton(driver).click();
+    }
+
+    @Then("^I should see username/password error$")
+    public void i_should_see_username_password_error() throws Throwable {
+        WebDriverWait waitLogin= new WebDriverWait(driver, 10);
+        waitLogin.until(presenceOfElementLocated(By.xpath("//*[@class='email-error']")));
+        String emailError, passwordError;
+        emailError = SignUpModal.EmailError(driver).getText();
+        passwordError = SignUpModal.PasswordError(driver).getText();
+        if(emailError.equals("Sorry, the email you entered is invalid") && passwordError.equals("Your password must be at least 5 characters long")){
+            System.out.print("Error Messages Pass");
+        }
+        driver.close();
+        driver.quit();
+    }
 
 }
