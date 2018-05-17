@@ -32,7 +32,6 @@ public class stepDefinition {
         driver.get("https://muuv.herokuapp.com/#/");
 
         WebDriverWait waitLogin= new WebDriverWait(driver, 10);
-        //waitLogin.until(ExpectedConditions.elementToBeClickable(By.linkText("Sign Up")));
         waitLogin.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@class='signup-root']")));
     }
 
@@ -64,6 +63,10 @@ public class stepDefinition {
     public void iCanViewSignUpModal() throws Throwable {
         WebDriverWait waitLogin= new WebDriverWait(driver, 10);
         waitLogin.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@class='signup-submit-button']")));
+        if(driver.findElement(By.className("signup-submit-button")).isDisplayed() == false){
+            System.out.print("Submit Modal not available.");
+            Assert.fail();
+        }
         driver.close();
         driver.quit();
     }
@@ -72,6 +75,10 @@ public class stepDefinition {
     public void iCanViewLogInPage() throws Throwable {
         WebDriverWait waitLogin= new WebDriverWait(driver, 10);
         waitLogin.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@class='login-submit-button']")));
+        if(driver.findElement(By.className("login-submit-button")).isDisplayed() == false){
+            System.out.print("Submit Modal not available.");
+            Assert.fail();
+        }
         driver.close();
         driver.quit();
     }
