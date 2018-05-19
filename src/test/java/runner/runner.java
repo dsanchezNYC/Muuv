@@ -8,7 +8,7 @@ import cucumber.api.CucumberOptions;
     @CucumberOptions(
             features={"resources"},
             glue={"stepDefinition"},
-            plugin={"html:target/selenium-reports"})
+            plugin={"pretty", "html:target/selenium-reports"})
 
     public class runner {
 

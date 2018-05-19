@@ -68,6 +68,12 @@
       <scope>test</scope>
     </dependency>
 
+    <dependency>
+      <groupId>net.masterthought</groupId>
+      <artifactId>cucumber-reporting</artifactId>
+      <version>3.17.1</version>
+    </dependency>
+
   </dependencies>
 
   <build>
